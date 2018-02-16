@@ -1,0 +1,80 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: http://mozilla.github.io/nunjucks/ -->
+<!-- jade: http://jade-lang.com/ -->
+<!-- haml: http://haml.info/tutorial.html -->
+<!-- hbs(handlebars): http://handlebarsjs.com/expressions.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to FMS Order Input!</title>
+    <meta name="description" content="Order Input screen for FMS INBOUND">
+    <link id="favicon" rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/handsontable.full.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        FMS Quick Order Entry
+      </h1>
+    </header>
+    <main>
+      <form id="oi" action="/data" method="post">
+        <table>
+          <tr>
+            <td class="inputcol"><input type="hidden" id="order-custcode" name="order-custcode" maxlength="100" value="FMS" placeholder="FMS"></td>
+            <td><input type="hidden" id="order-costcenter" name="order-costcenter" maxlength="100" value="O-VMROKALLO" placeholder="O-VMROKALLO"></td>
+          </tr>
+          <tr>
+            <td class="inputcol"><label>Operation:<select id="order-opcode" name="order-opcode">
+                                    <option value="DC" selected>Discharge ex-truck</option>
+                                    <option value="DCCT">Discharge ex-container</option>
+                                    <option value="DCWGN">Discharge ex-wagon</option>
+                                 </select></label></td>
+            <td><label>Planned Date:<input type="text" id="order-planneddate" id="order-planneddate" name="order-planneddate" maxlength="100"></label></td>
+            <td><label>FMS Order:<input type="text" id="order-extid" name="order-extid" maxlength="100" value="FMSTEST" placeholder="REQUIRED"></label></td>
+          </tr>
+          <tr>
+            <td><label>Transport Company:<input type="text" id="tpt-company" name="tpt-company" maxlength="100"></label></td>
+            <td><label>License Plate Truck:<input type="text" id="tpt-lictruck" name="tpt-lictruck" maxlength="100"></label></td>
+            <td><label>License Plate Trailer:<input type="text" id="tpt-lictrail" name="tpt-lictrail" maxlength="100"></label></td>
+          </tr>
+        </table>
+        <br/>
+        <div id="packinglist" name="packinglist"></div>
+        <br/>
+        <button type="submit">Submit</button>&nbsp;&nbsp;
+        <a id="retrieve" class="actionlink" href="">Get Data</a>
+        <a id="save" class="actionlink" href="">Save Data</a>
+        <a id="addrows" class="actionlink" href="">Add Rows</a>
+      </form>
+      <div id="busyindicator" style="display:none">Sending request. Please wait...</div>
+      <div id="serverresponse" ></div>
+    </main>
+
+    <footer>
+      <a target="_blank" href="http://www.ionlogistics.eu">
+        Copyright iOnLogistics
+      </a>
+    </footer>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+    <script src="/handsontable.full.js"></script>
+    <script src="/async.min.js"></script>
+    <script src="/util.js"></script>
+    <script src="/client.js"></script>
+    <script src="/contval.js"></script>
+
+  </body>
+</html>

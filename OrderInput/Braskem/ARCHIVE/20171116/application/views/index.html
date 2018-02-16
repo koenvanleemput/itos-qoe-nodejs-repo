@@ -1,0 +1,77 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: http://mozilla.github.io/nunjucks/ -->
+<!-- jade: http://jade-lang.com/ -->
+<!-- haml: http://haml.info/tutorial.html -->
+<!-- hbs(handlebars): http://handlebarsjs.com/expressions.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Braskem Order Input!</title>
+    <meta name="description" content="Order Input screen for Braskem inbound">
+    <link id="favicon" rel="icon" href="https://hyperdev.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/handsontable.full.css">
+  </head>
+  <body>
+    <header>
+      <h1>
+        Braskem Quick Order Entry
+      </h1>
+    </header>
+
+
+
+    <main>
+      <form id="oi" action="/data" method="post">
+        <table>
+          <tr>
+            <td class="inputcol"><label>Cust code:<input type="text" id="order-custcode" name="order-custcode" maxlength="100" value="BRASKEM NETHERLANDS BV" placeholder="BRASKEM NETHERLANDS BV"></label></td>
+            <td class="inputcol"><label>Order Ext id:<input type="text" id="order-extid" name="order-extid" maxlength="100" value="TBRNEWTEST" placeholder="REQUIRED"></label></td>
+          </tr>
+          <tr>
+            <!-- <label>Order Item Ext id:<input type="text" name="order-oiextid" maxlength="100" value="TestOrderItemKVL" placeholder="TestOrderItemKVL"></label> -->
+            <td><label>Cost Center:<input type="text" id="order-costcenter" name="order-costcenter" maxlength="100" value="O-VMROKAAI1793" placeholder="O-VMROKAAI1793"></label></td>
+            <td><label>Operation code:<input type="text" id="order-opcode" name="order-opcode" maxlength="100" value="DCCT" placeholder="DCCT"></label></td>
+          </tr>
+          <tr>
+            <td><label>Planned Date:<input type="text" id="order-planneddate" name="order-planneddate" maxlength="100"></label></td>
+          </tr>
+          </tr>
+        </table>
+        <br/>
+        <div id="hstable" name="hstable"></div>
+        <br/>
+        <button type="submit">Submit</button>&nbsp;&nbsp;
+        <a id="retrieve" class="actionlink" href="">Get Data</a>
+        <a id="save" class="actionlink" href="">Save Data</a>
+      </form>
+      <div id="busyindicator" style="display:none">Sending request. Please wait...</div>
+      <div id="serverresponse" ></div>
+    </main>
+
+    <footer>
+      <a href="http://www.ionlogistics.eu">
+        Copyright iOnLogistics
+      </a></br></br>
+      <a id="testlink" href="">Test</a>
+    </footer>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+    <script src="/handsontable.full.js"></script>
+    <script src="/async.min.js"></script>
+    <script src="/util.js"></script>
+    <script src="/ContainerValidator.js"></script>
+    <script src="/client.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,24 @@
+{
+	"//1": "Custom app to input Orders into iTOS",
+	"name": "itos-fms-orderinput",
+	"version": "0.0.1",
+	"description": "What am I about?",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"express": "",
+		"body-parser": "",
+		"handsontable": ""
+	},
+	"engines": {
+		"node": ""
+	},
+	"keywords": [
+		"node",
+		"hyperdev",
+		"express"
+	],
+	"license": "MIT"
+}

@@ -1,0 +1,85 @@
+<!-- pug: https://pugjs.org -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Braskem Order Input!</title>
+    <meta name="description" content="Order Input screen for Braskem inbound">
+    <link id="favicon" rel="icon" href="https://hyperdev.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/handsontable.full.css">
+    <link rel="stylesheet" href="/jquery-ui.min.css">
+  </head>
+  <body>
+    <header>
+      <h1> Braskem Quick Order Entry #{environment} </h1>
+    </header>
+
+    <main>
+      <form id="oi" action="/data" method="post">
+        <table>
+          <tr>
+            <td class="mediumcol"><label>Cust code:<input type="text" id="order-custcode" name="order-custcode" maxlength="100" value="BRASKEM NETHERLANDS BV" placeholder="BRASKEM NETHERLANDS BV"></label></td>
+            <td class="mediumcol"><label>Operation code:<input type="text" id="order-opcode" name="order-opcode" maxlength="100" value="DCCT" placeholder="DCCT"></label></td>
+            <td class="mediumcol"><label>Cost Center:<input type="text" id="order-costcenter" name="order-costcenter" maxlength="100" value="O-VMROKAAI1793" placeholder="O-VMROKAAI1793"></label></td>
+            <td class="mediumcol" colspan="2"></td>
+          </tr>
+          <tr>
+            <!-- <label>Order Item Ext id:<input type="text" name="order-oiextid" maxlength="100" value="TestOrderItemKVL" placeholder="TestOrderItemKVL"></label> -->
+            <td><label>Order Ext id:<input type="text" id="order-extid" name="order-extid" maxlength="100" value="TBRREFTEST" placeholder="REQUIRED"></label></td>
+            <td><label>Planned Date:<input class="datepicker" type="text" id="order-planneddate" name="order-planneddate" maxlength="100"></label></td>
+            <td><label>Invoice Number:</label><input type="text" id="invoice-number"></input></td>
+            <td colspan="2"><label>Invoice Date:</label><input class="datepicker" type="text" id="invoice-date"></input></td>
+          </tr>
+          <tr>
+            <td><label>Invoice Value:</label><input class="number" type="text" id="invoice-value"></input></td>
+            <td><label>Invoice Currency:</label><br>
+              <select id="invoice-currency" style="width: 198px">
+                <option value="EUR" selected>EUR</option>
+                <option value="USD">USD</option>
+              </select>
+            </td>
+            <td><label>FOB Antwerpen:</label><input class="number" type="text" id="invoice-fob"></input></td>
+            <td colspan="2"><label>Freight Cost:</label><input class="number" type="text" id="invoice-frc"></input></td>
+          </tr>
+          <tr>
+            <td><label>Insurance Cost:</label><input class="number" type="text" id="invoice-insurance"></input></td>
+            <td><label>CIF Antwerpen:</label><input type="text" id="invoice-cif"></input></td>
+            <td><label>Customs Document Number:</label><input type="text" id="customs-docnr"></input></td>
+            <td class="minicol"><label>This is invoice no.</label><input class="number" type="text" value="1" id="invoice-from"></input></td>
+            <td class="minicol"><label>of total # Invoices</label><input class="number" type="text" value="1" id="invoice-total"></input></td>
+          </tr>
+        </table>
+        <br/>
+        <div id="hstable" name="hstable"></div>
+        <br/>
+        <button type="submit">Submit</button>&nbsp;&nbsp;
+        <a id="retrieve" class="actionlink" href="">Get Data</a>
+        <a id="save" class="actionlink" href="">Save Data</a>
+      </form>
+      <div id="busyindicator" style="display:none">Sending request. Please wait...</div>
+      <div id="serverresponse" ></div>
+    </main>
+
+    <footer>
+      <a href="http://www.ionlogistics.eu"> Copyright iOnLogistics </a></br></br>
+      <a id="testlink" href="">Test</a>
+    </footer>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha384-rY/jv8mMhqDabXSo+UCggqKtdmBfd3qC2/KvyTDNQ6PcUJXaxK1tMepoQda4g5vB" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha384-Dziy8F2VlJQLMShA6FHWNul/veM9bCkRUaLqr199K94ntO5QUrLJBEbYegdSkkqX" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery.number.min.js"></script>
+    <script src="/handsontable.full.js"></script>
+    <script src="/async.min.js"></script>
+    <script src="/util.js"></script>
+    <script src="/ContainerValidator.js"></script>
+    <script src="/client.js"></script>
+
+  </body>
+</html>

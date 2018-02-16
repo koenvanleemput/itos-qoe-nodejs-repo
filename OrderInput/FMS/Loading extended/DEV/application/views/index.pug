@@ -1,0 +1,88 @@
+<!-- pug: https://pugjs.org -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to FMS Order Input!</title>
+    <meta name="description" content="Order Input screen for FMS OUTBOUND">
+    <link id="favicon" rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/handsontable.full.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <header>
+      <h1> FMS Quick Order Entry <u>Outbound</u> #{environment} </h1>
+    </header>
+    <main>
+      <form id="oi" action="/data" method="post">
+        <table>
+          <tr>
+            <td class="mediumcol"><input type="hidden" id="order-custcode" name="order-custcode" maxlength="100" value="FMS" placeholder="FMS"></td>
+            <td class="mediumcol"><input type="hidden" id="order-costcenter" name="order-costcenter" maxlength="100" value="O-VMROKALLO" placeholder="O-VMROKALLO"></td>
+            <td class="narrowcol" />
+            <td class="narrowcol" />
+          </tr>
+          <tr>
+            <td><label>Operation:
+              <select id="order-opcode" name="order-opcode">
+                <option value="LTRO" selected>Loading into truck</option>
+                <option value="LCTRO">Loading into container</option>
+              </select></label></td>
+          </tr>
+          <tr>
+            <td><label>FMS Order:<sup>*</sup><input type="text" id="order-extid" name="order-extid" maxlength="100" value="FMSEXTENDED" placeholder="REQUIRED"></label></td>
+            <td><label>Planned Date:<sup>*</sup><input type="text" id="order-planneddate" id="order-planneddate" name="order-planneddate" maxlength="100"></label></td>
+            <td><div class="extid" id="orderItemExternalId"></div></td>
+            <td><div class="extid" id="transportReference"></div></td>
+          </tr>
+        </table>
+        <br/>
+        <h2>Outbound Transport Info</h2>
+        <div id="transportlist" name="transportlist"></div>
+        <br/>
+        <h2>Planned Goods</h2>
+        <div id="plannedgoods" name="plannedgoods"></div>
+        <br/>
+        <a id="searchstock" class="actionlink" href="">Search stock</a>
+        <br/>
+        <h2>Transport Summary</h2>
+        <div id="transportsummary" name="transportsummary"></div>
+        <br/>
+        <h2>Packing List</h2>
+        <a id="sort" class="actionlink" href="">Sort</a>
+        <a id="unique" class="actionlink" href="">Unique</a>
+        <br/>
+        <br/>
+        <div id="packinglist" name="packinglist"></div>
+        <br/>
+        <h1><span style="width:230px; display:inline-block"></span>Total gross: <span id="totalgross"></span></h1>
+        <button type="submit">Submit</button>&nbsp;&nbsp;
+        <a id="retrieve" class="actionlink" href="">Get Data</a>
+        <a id="save" class="actionlink" href="">Save Data</a>
+        <a id="addrows" class="actionlink" href="">Add Rows</a>
+      </form>
+      <div id="busyindicator" style="display:none">Sending request. Please wait...</div>
+      <div id="serverresponse" ></div>
+    </main>
+
+    <footer>
+      <a target="_blank" href="http://www.ionlogistics.eu"> Copyright iOnLogistics</a>&nbsp;&nbsp;
+      <a id="testlink" href="">Test</a>
+    </footer>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha384-rY/jv8mMhqDabXSo+UCggqKtdmBfd3qC2/KvyTDNQ6PcUJXaxK1tMepoQda4g5vB" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/handsontable.full.js"></script>
+    <script src="/async.min.js"></script>
+    <script src="/util.js"></script>
+    <script src="/client.js"></script>
+    <script src="/contval.js"></script>
+
+  </body>
+</html>

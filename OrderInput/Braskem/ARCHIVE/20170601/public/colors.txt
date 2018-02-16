@@ -1,0 +1,4 @@
+purple
+blue
+white
+lilac

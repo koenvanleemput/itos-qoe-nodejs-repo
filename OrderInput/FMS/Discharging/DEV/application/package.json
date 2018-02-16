@@ -1,0 +1,28 @@
+{
+	"//1": "Custom app to input Orders into iTOS",
+	"name": "itos-fms-orderinput",
+	"version": "0.0.1",
+	"description": "Quick Order Entry FMS",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"async": "^2.5.0",
+		"body-parser": "",
+		"express": "",
+		"pug": "",
+		"sequelize": "^4.2.1",
+		"socket.io": "^2.0.3",
+		"sqlite3": "",
+		"unirest": ""
+	},
+	"engines": {
+		"node": ""
+	},
+	"keywords": [
+		"node",
+		"express"
+	],
+	"license": "MIT"
+}

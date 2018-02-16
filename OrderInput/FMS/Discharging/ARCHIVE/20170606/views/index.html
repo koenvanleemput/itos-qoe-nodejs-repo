@@ -1,0 +1,61 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: http://mozilla.github.io/nunjucks/ -->
+<!-- jade: http://jade-lang.com/ -->
+<!-- haml: http://haml.info/tutorial.html -->
+<!-- hbs(handlebars): http://handlebarsjs.com/expressions.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to FMS Order Input!</title>
+    <meta name="description" content="A cool thing made with HyperDev">
+    <link id="favicon" rel="icon" href="https://hyperdev.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/handsontable.full.css">
+  </head>
+  <body>
+    <header>
+      <h1>
+        Input Order
+      </h1>
+    </header>
+
+
+
+    <main>
+      <p>Input form:</p>
+      <form id="oi" action="/data" method="post">
+        <label>Cust code:<input type="text" name="order[custcode]" maxlength="100" value="FMS" placeholder="FMS"></label>
+        <label>Order Ext id:<input type="text" name="order[extid]" maxlength="100" value="TestOrderKVL" placeholder="TestOrderKVL"></label>
+        <label>Order Item Ext id:<input type="text" name="order[oiextid]" maxlength="100" value="TestOrderItemKVL" placeholder="TestOrderItemKVL"></label>
+        <label>Cost Center:<input type="text" name="orderitem[costcenter]" maxlength="100" value="O-VMROKALLO" placeholder="O-VMROKALLO"></label>
+        <label>Operation code:<input type="text" name="order[opcode]" maxlength="100" value="DC" placeholder="DC"></label>
+        <label>Planned Date:<input type="text" id="planneddate" name="order[planneddate]" maxlength="100"></label>
+        <br/>
+        <div id="hstable" name="hstable"></div>
+        <br/>
+        <button type="submit">Submit</button>
+      </form>
+    </main>
+
+    <footer>
+      <a href="http://www.ionlogistics.eu">
+        Copyright iOnLogistics
+      </a>
+    </footer>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+    <script src="/handsontable.full.js"></script>
+    <script src="/client.js"></script>
+
+  </body>
+</html>

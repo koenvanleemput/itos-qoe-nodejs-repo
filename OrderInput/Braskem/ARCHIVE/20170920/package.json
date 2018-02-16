@@ -1,0 +1,27 @@
+{
+	"//1": "Custom app to input Orders into iTOS",
+	"name": "itos-braskem-orderinput",
+	"version": "0.0.1",
+	"description": "What am I about?",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"async": "",
+		"body-parser": "",
+		"express": "",
+		"pug": "^2.0.0-rc.2",
+		"sequelize": "",
+		"sqlite3": "",
+		"unirest": ""
+	},
+	"engines": {
+		"node": ""
+	},
+	"keywords": [
+		"node",
+		"express"
+	],
+	"license": "MIT"
+}

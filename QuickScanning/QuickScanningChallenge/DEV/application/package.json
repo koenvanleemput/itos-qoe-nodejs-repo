@@ -1,0 +1,23 @@
+{
+	"name": "quick-scanning-Challenge",
+	"version": "0.0.1",
+	"description": "Simple app for reading barcodes into SQLite3 DB using the Sequelize ORM",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"express": "*",
+		"sqlite3": "*",
+		"sequelize": "*"
+	},
+	"engines": {
+		"node": "*"
+	},
+	"keywords": [
+		"node",
+		"hyperdev",
+		"express"
+	],
+	"license": "MIT"
+}

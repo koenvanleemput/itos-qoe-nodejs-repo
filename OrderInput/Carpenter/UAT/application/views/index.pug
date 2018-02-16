@@ -1,0 +1,72 @@
+<!-- pug: https://pugjs.org -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Carpenter Order Input!</title>
+    <meta name="description" content="Order Input screen for Carpenter inbound">
+    <link id="favicon" rel="icon" href="https://hyperdev.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/handsontable.full.css">
+    <link rel="stylesheet" href="/jquery-ui.min.css">
+  </head>
+  <body>
+    <header>
+      <h1> Carpenter Quick Order Entry #{environment} </h1>
+    </header>
+
+    <main>
+      <form id="oi" action="/data" method="post">
+        <table>
+          <tr> <!-- Row 1 -->
+            <td class="mediumcol"><label>Customer:</label>
+              <select id="order-custcode" name="order-custcode">
+                <option value="CPTR" selected>Carpenter</option>
+              </select>
+            </td>
+            <td class="mediumcol"><label>Order External id:<input type="text" id="order-extid" name="order-extid" maxlength="100" value="CARPTEST2" placeholder="REQUIRED"></label></td>
+            <td class="mediumcol"><label>Container no.:<input type="text" id="order-contno" name="order-contno" maxlength="100" value="CONTNO"</label></td>
+            <td class="mediumcol"><label>Product:<input type="text" id="order-productcode" name="order-productcode" maxlength="100" value="COLLI" placeholder="COLLI"></label></td>
+          </tr>
+          <tr> <!-- Row 2 -->
+            <td class="mediumcol"><label>Cost Center:<input type="text" id="order-costcenter" name="order-costcenter" maxlength="100" value="O-VMROOUDENDIJK" placeholder="O-VMROOUDENDIJK"></label></td>
+            <td class="mediumcol"><label>Operation:</label>
+              <select id="order-opcode" name="order-opcode">
+                <option value="DCCT" selected>Discharge Container</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+        <br/>
+        <div id="hstable" name="hstable"></div>
+        <br/>
+        <button type="submit">Submit</button>&nbsp;&nbsp;
+        <a id="retrieve" class="actionlink" href="">Get Data</a>
+        <a id="save" class="actionlink" href="">Save Data</a>
+        <a id="splittagnumbers" class="actionlink" href="">Split Tag Numbers</a>
+      </form>
+      <div id="busyindicator" style="display:none">Sending request. Please wait...</div>
+      <div id="serverresponse" ></div>
+    </main>
+
+    <footer>
+      <a href="http://www.ionlogistics.eu"> Copyright iOnLogistics </a></br></br>
+      <a id="testlink" href="">Test</a>
+    </footer>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha384-rY/jv8mMhqDabXSo+UCggqKtdmBfd3qC2/KvyTDNQ6PcUJXaxK1tMepoQda4g5vB" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha384-Dziy8F2VlJQLMShA6FHWNul/veM9bCkRUaLqr199K94ntO5QUrLJBEbYegdSkkqX" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery.number.min.js"></script>
+    <script src="/handsontable.full.js"></script>
+    <script src="/async.min.js"></script>
+    <script src="/util.js"></script>
+    <script src="/ContainerValidator.js"></script>
+    <script src="/client.js"></script>
+
+  </body>
+</html>
