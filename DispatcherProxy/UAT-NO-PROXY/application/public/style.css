@@ -1,0 +1,121 @@
+/* styles */
+/* called by your view template */
+
+/* You might want to try something fancier: */
+/* less: http://lesscss.org/ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-size: 9px;
+  margin: 25px;
+  background-color: #FAFAFA;
+}
+
+h1 {
+  font-weight: bold;
+  color: #7f0000;
+  font-size: 24px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.extid {
+  font-weight: bold;
+  color: #7f0000;
+  font-size: 14px;
+  padding-left: 20px;
+}
+
+p {
+  max-width: 600px;
+}
+
+form {
+  margin-bottom: 25px;
+  padding: 15px;
+  background-color: #FAFAFA;
+  display: inline-block;
+  width: 124%;
+  height: auto;
+  overflow: visible;
+  max-width: 2000px;
+  border-radius: 3px;
+}
+
+table {
+  table-layout: fixed;
+  /*width: 100%;*/
+  white-space: nowrap;
+}
+
+.widecol {
+  width: 300px;
+}
+
+.narrowcol {
+  width: 150px;
+}
+
+.minicol {
+  width: 50px;
+}
+
+input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  font-size: 9px;
+}
+
+button {
+  font-size: 12px;
+  border-radius: 3px;
+  background-color: lightgrey;
+  border: 1px solid grey;
+  box-shadow: 2px 2px teal;
+  cursor: pointer;
+}
+
+.actionlink {
+  font-size: 12px;
+}
+
+button:hover {
+  background-color: yellow;
+}
+
+button:active {
+  box-shadow: none;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+footer {
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid lightgrey;
+}
+
+footer > a {
+  color: #BBBBBB;
+}
+
+.nicejob {
+  text-decoration: line-through;
+}
+
+.handsontable { /* span.colHeader { */
+    font-size: 9px;
+    height: auto;
+}

@@ -1,0 +1,39 @@
+<!-- pug: https://pugjs.org -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Quick Order Entry!</title>
+    <meta name="description" content="Quick Order Entry dispatcher">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/w3.css">
+    <link rel="stylesheet" href="/style_disp.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <header>
+      <h1>iTOS Quick Order Entry <u>#{environment}</u> </h1>
+    </header>
+    <main>
+      table
+        each site in sites
+          tr
+            td
+              - var url = '/' + site.basepath
+              a(href=url, class='w3-button w3-block w3-round-large w3-large w3-blue w3-hover-purple w3-rounder')
+                =site.name
+      </table>
+    </main>
+
+    <footer>
+      <a target="_blank" href="http://www.ionlogistics.eu"> Copyright iOnLogistics</a>&nbsp;&nbsp;
+    </footer>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha384-rY/jv8mMhqDabXSo+UCggqKtdmBfd3qC2/KvyTDNQ6PcUJXaxK1tMepoQda4g5vB" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script> -->
+    <script src="/client_disp.js"></script>
+  </body>
+</html>

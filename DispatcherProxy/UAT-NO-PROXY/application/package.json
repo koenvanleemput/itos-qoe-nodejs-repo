@@ -1,0 +1,23 @@
+{
+	"//1": "Custom app to input Orders into iTOS",
+	"name": "itos-qoe-dispatcher",
+	"version": "1.0.0",
+	"description": "Quick Order Entry Dispatcher",
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"body-parser": "",
+		"express": "",
+		"pug": ""
+	},
+	"engines": {
+		"node": ""
+	},
+	"keywords": [
+		"node",
+		"express"
+	],
+	"license": "MIT"
+}
