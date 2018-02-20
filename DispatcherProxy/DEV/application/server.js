@@ -10,7 +10,7 @@ var ENVIRONMENT;
 
 /*** initialize constants ***/
 
-var WEBSERVER = '10.3.149.31';
+var WEBSERVER = 'localhost' // '10.3.149.31';
 
 var SITES_UAT = [
   {name: 'Braskem', basepath: 'Braskem_Inbound', port: 8877},
@@ -18,6 +18,7 @@ var SITES_UAT = [
   {name: 'FMS Outbound', basepath: 'FMS_Outbound', port: 8890},
   {name: 'FMS Outbound Extended', basepath: 'FMS_ExtOutbound', port: 8900},
   {name: 'Carpenter', basepath: 'Carpenter_Inbound', port: 8867},
+  {name: 'HHT Stock Inventory', basepath: 'HHT_Stock_Inventory', port: 8799},
 ];
 
 var SITES_PRD = [

@@ -1,0 +1,46 @@
+<!-- pug: https://pugjs.org -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Stock Scanning for Nippon!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <header>
+      <h1>Input Stock #{environment}</h1>
+    </header>
+
+    <main>
+      <form id="formNippon">
+        <input id="fLocation" type="text" maxlength="100" placeholder="Location">
+        <input id="fInventorynumber" type="text" maxlength="100" placeholder="Scan Inventory number">
+        <input id="fRemark" type="text" maxlength="255" placeholder="Remark">
+        <button type="submit">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;<a id="aShow" href="">Get Info from iTOS</a>&nbsp;&nbsp;&nbsp;&nbsp;<a id="aHide" href="">Hide</a>
+      </form>
+      <div id="stockinfo">
+        <p>Stock Details:</p>
+        <pre id="stockdetails"></pre>
+      </div>
+       <p>Already scanned stock:</p>
+      <section class="stock">
+        <ul id="stock"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <a href="http://www.ionlogistics.eu">Developed by iOnLogistics</a>
+      <br><br>
+      <a id="aQuery" href="">Query</a>
+      <br><br>
+      <a id="aClear" href="">Clear List</a>
+    </footer>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
+    <script src="/client.js"></script>
+  </body>
+</html>

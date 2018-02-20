@@ -1,11 +1,4 @@
-<!-- This is a static file -->
-<!-- served from your routes in server.js -->
-
-<!-- You might want to try something fancier: -->
-<!-- html/nunjucks docs: http://mozilla.github.io/nunjucks/ -->
-<!-- jade: http://jade-lang.com/ -->
-<!-- haml: http://haml.info/tutorial.html -->
-<!-- hbs(handlebars): http://handlebarsjs.com/expressions.html -->
+<!-- pug: https://pugjs.org -->
 
 <!DOCTYPE html>
 <html>
@@ -18,9 +11,7 @@
   </head>
   <body>
     <header>
-      <h1>
-        Input Stock
-      </h1>
+      <h1>Input Stock #{environment}</h1>
     </header>
 
     <main>
@@ -36,25 +27,20 @@
       </div>
        <p>Already scanned stock:</p>
       <section class="stock">
-        <ul id="stock">
-        </ul>
+        <ul id="stock"></ul>
       </section>
     </main>
 
     <footer>
-      <a href="http://www.ionlogistics.eu">
-        Developed by iOnLogistics
-      </a><br><br>
+      <a href="http://www.ionlogistics.eu">Developed by iOnLogistics</a>
+      <br><br>
       <a id="aQuery" href="">Query</a>
       <br><br>
       <a id="aClear" href="">Clear List</a>
     </footer>
 
     <!-- Your web-app is https, so your scripts need to be too -->
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js" integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=" crossorigin="anonymous"></script>
     <script src="/client.js"></script>
-
   </body>
 </html>
