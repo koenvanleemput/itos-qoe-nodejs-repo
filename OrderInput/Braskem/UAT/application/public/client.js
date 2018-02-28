@@ -1,8 +1,33 @@
 // client-side js
 // run by the browser each time your view template is loaded
 
-// by default, you've got jQuery,
-// add other scripts at the bottom of index.html
+// data table columns
+const COL_CONT = 0;         // Container
+const COL_CONTTYPE = 1;     // Container Type
+const COL_PRODCODE = 2;     // Product Code
+const COL_LOT = 3;          // LOT
+const COL_QTY = 4;          // Qty Bags
+const COL_UNIT = 5;         // Unit
+const COL_ARTNO = 6;        // Article No.
+const COL_ITEMNO = 7;       // Item No.
+const COL_COUNTRY = 8;      // Origin Country Code
+const COL_DROPOFF = 9;      // Drop-Off Warehouse
+const COL_PONO = 10;        // PO Number
+const COL_INVNO = 11;       // Invoice Number
+const COL_INVFROM = 12;     // Invoice From
+const COL_INVTOTAL = 13;    // Invoice Total
+const COL_INVDATE = 14;     // Invoice Date
+const COL_UNITPRICE = 15;   // UnitPrice
+const COL_PRICE_UOM = 16;   // Unit Price unit of measure
+const COL_INVCURR = 17;     // Invoice Currency
+const COL_INVAMNT = 18;     // Invoice Amount FOB
+const COL_FREIGHT = 19;     // Freight Costs
+const COL_INSURANCE = 20;   // Insurance Costs
+const COL_CIF = 21;         // Total FOB + CIF Antwerp
+const COL_INCO = 22;        // Incoterms
+const COL_REM = 23;         // Other Remarks
+
+const MIN_SPARE_ROWS = 1;
 
 $(function() {
   /*** initialize data ***/
@@ -15,6 +40,7 @@ $(function() {
 
   var hot;
   var containerValidator = new ContainerValidator();
+  var warehouseaddresses;
 
   async.series({
       units: (cb) => {loadComboValues('units.txt', cb);},
@@ -23,37 +49,41 @@ $(function() {
       // depots: (cb) => {loadComboValues('depots.txt', cb);},
       warehouses: (cb) => {loadComboValues('warehouses.txt', cb);},
       // shippinglines: (cb) => {loadComboValues('shippinglines.txt', cb);},
-      countrycodes: (cb) => {loadComboValues('countrycodes.txt', cb);}
+      countrycodes: (cb) => {loadComboValues('countrycodes.txt', cb);},
+      addresses: (cb) => {loadWarehouseAddresses('warehouseaddresses.txt', cb);}
   },
   function(err, results) {
     var container = document.getElementById('hstable');
+    warehouseaddresses = results.addresses;
 
     hot = new Handsontable(container, {
       data: tabledata,
-      columns: [{title: "PO Number"},
-                {title: "Invoice Number"},
-                {title: "Invoice From", type: 'numeric', format: '0'},
-                {title: "Invoice Total", type: 'numeric', format: '0'},
-                {title: "Invoice Date", width: 80, type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true},
-                {title: "Invoice Amount", type: 'numeric', format: '0.00'},
-                {title: "Invoice Currency", type: 'dropdown', source: ['EUR', 'USD']},
-                {title: "Incoterms", type: 'dropdown', source: ['C&F', 'DDP', 'CFR', 'CIF', 'FOB']},
-                {title: "FOB Antwerp", type: 'numeric', format: '0.00'},
-                {title: "CIF Antwerp", type: 'numeric', format: '0.00'},
-                {title: "Drop-Off Warehouse", type: 'dropdown', source: results.warehouses},
-                {title: "Other Remarks"},
-                {title: "Article No."},
-                {title: "Item No."},
-                {title: "Container", width: 80, validator: (value, callback) => { callback(containerValidator.isValid(value)); }},
+      columns: [{title: "Container", width: 80, validator: (value, callback) => { callback(containerValidator.isValid(value)); }},
                 {title: "Container Type", type: 'dropdown', source: results.containertypes},
                 {title: "Product Code"},
                 {title: "LOT"},
                 {title: "Qty Bags", type: 'numeric', format: '0.00'},
                 {title: "Unit", type: 'dropdown', source: results.units},
+                {title: "Article No."},
+                {title: "Item No."},
                 {title: "Origin Country Code", type: 'dropdown', source: results.countrycodes},
+                {title: "Drop-Off Warehouse", type: 'dropdown', source: results.warehouses},
+                {title: "PO Number"},
+                {title: "Invoice Number"},
+                {title: "Invoice From", type: 'numeric', format: '0'},
+                {title: "Invoice Total", type: 'numeric', format: '0'},
+                {title: "Invoice Date", width: 80, type: 'date', dateFormat: 'YYYY-MM-DD', correctFormat: true},
                 {title: "UnitPrice", type: 'numeric', format: '0.00'},
+                {title: "UnitPrice UOM", type: 'dropdown', source: ['Tons', 'Lbs', 'KGM']},
+                {title: "Invoice Currency", type: 'dropdown', source: ['EUR', 'USD']},
+                {title: "Invoice Amount FOB", type: 'numeric', format: '0.00'},
+                {title: "Freight Costs", type: 'numeric', format: '0.00'},
+                {title: "Insurance Costs", type: 'numeric', format: '0.00'},
+                {title: "Total FOB + CIF Antwerp", type: 'numeric', format: '0.00'},
+                {title: "Incoterms", type: 'dropdown', source: ['C&F', 'DDP', 'CFR', 'CIF', 'FOB']},
+                {title: "Other Remarks"},
                 ],
-      minSpareRows: 1,
+      minSpareRows: MIN_SPARE_ROWS,
       rowHeaders: true,
       colHeaders: true,
       dropdownMenu: true });
@@ -73,6 +103,16 @@ $(function() {
   loadComboValues('agentcodes.txt', (err, results) =>  {
     results.forEach( (res) => {
       $("select#order-agentcode")
+        .append($("<option></option")
+          .attr("value", res)
+          .text(res)
+        );
+    });
+  });
+
+  loadComboValues('isoCountryCodes.txt', (err, results) =>  {
+    results.forEach( (res) => {
+      $("select#order-dispatchcountry")
         .append($("<option></option")
           .attr("value", res)
           .text(res)
@@ -102,6 +142,20 @@ $(function() {
        inputvalid = false;
        alert("Please fill in Order External Id!");
     }
+
+    // check total invoice price
+    for (let i = 0; i < fdata.table.length - MIN_SPARE_ROWS; i++) {
+      let row = fdata.table[i];
+      let total = row[COL_INVAMNT] + row[COL_FREIGHT] + row[COL_INSURANCE];
+      if (total != row[COL_CIF]) {
+          inputvalid = false;
+          alert('ROW ' + (i+1) + ': “Total FOB + CIF Antwerp” not equal to “Invoice Amount FOB” + “Freight Costs” + “Insurance Costs”!\n' +
+            total + ' <> ' + row[COL_CIF] + '. Cannot submit order.');
+      }
+    }
+
+    // add address info
+    fdata.address = warehouseaddresses[fdata.warehouse];
 
     if (inputvalid){
       // save form data  in SQLite DB
@@ -204,6 +258,7 @@ var loadFormData = function(form, hot) {
     pickup: form.find( "input[id='order-pickup']" ).val(),
     shipno: form.find( "input[id='order-shipno']" ).val(),
     agentcode: form.find( "select[id='order-agentcode']" ).val(),
+    dispatchcountry: form.find( "select[id='order-dispatchcountry']" ).val(),
     // articleno: form.find( "input[id='order-articleno']" ).val(),
     // itemno: form.find( "input[id='order-itemno']" ).val(),
     warehouse: form.find( "select[id='order-warehouse']" ).val(),
@@ -236,13 +291,14 @@ var retrieveFormData = function(fdata, hot) {
       document.getElementById('order-eta').value  = res.eta;
       document.getElementById('order-arrived').value  = res.arrived;
       document.getElementById('order-vessel').value  = res.vessel;
-      document.getElementById('order-voyage').value  = res.voyage;
+      // document.getElementById('order-voyage').value  = res.voyage;
       document.getElementById('order-billoflading').value  = res.billoflading;
       document.getElementById('order-quay').value  = res.quay;
       document.getElementById('order-lloyd').value  = res.lloyd;
       document.getElementById('order-pickup').value  = res.pickup;
       document.getElementById('order-shipno').value  = res.shipno;
       document.getElementById('order-agentcode').value  = res.agentcode;
+      document.getElementById('order-dispatchcountry').value  = res.dispatchcountry;
       // document.getElementById('order-articleno').value  = res.articleno;
       // document.getElementById('order-itemno').value  = res.itemno;
       document.getElementById('order-warehouse').value  = res.warehouse;
@@ -256,6 +312,12 @@ var retrieveFormData = function(fdata, hot) {
 var saveFormData = function(fdata) {
   // alert("saving order entry data for " + fdata.extid);
   var url = "/entries";
+
+  // clean empty rows from table
+  fdata.table = fdata.table.filter(function(item, index, array){
+    if (item[COL_CONT] !== null && item[COL_CONT] !== "")
+    return item;
+  });
 
   $('#serverresponse').html("");
   $.post( url, { data: JSON.stringify(fdata) } ).done(function(response){
@@ -284,6 +346,23 @@ var loadComboValues = function(path, callback) {
     }
     // console.log(array);
     callback(null, array);
+  });
+}
+
+var loadWarehouseAddresses = function(path, callback) {
+  $.get(path, function(data) {
+    //split on new lines
+    var lines = data.split('\n');
+    if (lines[lines.length-1] === "") {
+        lines.pop();
+    }
+
+    let addresses = {};
+    for (let i = 0; i < lines.length; i++) {
+      line = lines[i].split(';');
+      addresses[line[0]] = {line: line[1], zip: line[2], city: line[3], countrycode: line[4]};
+    }
+    callback(null, addresses);
   });
 }
 

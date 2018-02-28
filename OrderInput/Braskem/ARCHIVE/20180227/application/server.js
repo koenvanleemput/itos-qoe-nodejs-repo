@@ -11,30 +11,28 @@ var main = function() {
   const DB_PASS = "braskem";
 
   // data table columns
-  const COL_CONT = 0;         // Container
-  const COL_CONTTYPE = 1;     // Container Type
-  const COL_PRODCODE = 2;     // Product Code
-  const COL_LOT = 3;          // LOT
-  const COL_QTY = 4;          // Qty Bags
-  const COL_UNIT = 5;         // Unit
-  const COL_ARTNO = 6;        // Article No.
-  const COL_ITEMNO = 7;       // Item No.
-  const COL_COUNTRY = 8;      // Origin Country Code
-  const COL_DROPOFF = 9;      // Drop-Off Warehouse
-  const COL_PONO = 10;        // PO Number
-  const COL_INVNO = 11;       // Invoice Number
-  const COL_INVFROM = 12;     // Invoice From
-  const COL_INVTOTAL = 13;    // Invoice Total
-  const COL_INVDATE = 14;     // Invoice Date
-  const COL_UNITPRICE = 15;   // UnitPrice
-  const COL_PRICE_UOM = 16;   // Unit Price unit of measure
-  const COL_INVCURR = 17;     // Invoice Currency
-  const COL_INVAMNT = 18;     // Invoice Amount FOB
-  const COL_FREIGHT = 19;     // Freight Costs
-  const COL_INSURANCE = 20;   // Insurance Costs
-  const COL_CIF = 21;         // Total FOB + CIF Antwerp
-  const COL_INCO = 22;        // Incoterms
-  const COL_REM = 23;         // Other Remarks
+  const COL_PONO = 0;        // PO Number
+  const COL_INVNO = 1;       // Invoice Number
+  const COL_INVFROM = 2;     // Invoice From
+  const COL_INVTOTAL = 3;    // Invoice Total
+  const COL_INVDATE = 4;     // Invoice Date
+  const COL_INVAMNT = 5;     // Invoice Amount
+  const COL_INVCURR = 6;     // Invoice Currency
+  const COL_INCO = 7;        // Incoterms
+  const COL_FOB = 8;         // FOB Antwerp
+  const COL_CIF = 9;         // CIF Antwerp
+  const COL_DROPOFF = 10;    // Drop-Off Warehouse
+  const COL_REM = 11;        // Other Remarks
+  const COL_ARTNO = 12;      // Article No.
+  const COL_ITEMNO = 13;     // Article No.
+  const COL_CONT = 14;       // Container
+  const COL_CONTTYPE = 15;   // Container Type
+  const COL_PRODCODE = 16;   // Product Code
+  const COL_LOT = 17;        // LOT
+  const COL_QTY = 18;        // Qty Bags
+  const COL_UNIT = 19;       // Unit
+  const COL_COUNTRY = 20;    // Origin Country Code
+  const COL_UNITPRICE = 21;  // UnitPrice
 
   var PORT;
   var HOSTNAME;
@@ -114,6 +112,7 @@ var main = function() {
     data.invoice_containers.forEach(function(invoice_container){
       // console.log("======= filtering invoice_container: " + invoice_container + " =========");
       data.containerTables[invoice_container] = data.table.filter(function(item, index, array){
+        // TOOD CONTAINER TABLES
         if ((item[COL_INVNO] === invoice_container[0]) && (item[COL_CONT] === invoice_container[1]))
           return item;
       });
@@ -252,15 +251,6 @@ var main = function() {
       var goods = [];
 
       data.containerTables[container].forEach(function(value){
-        // convert unit price to price per kg depending on UOM
-        let factor = 1.00;
-        if (value[COL_PRICE_UOM] === 'Tons') {
-          factor =  0.001;
-        }
-        if (value[COL_PRICE_UOM] === 'Lbs') {
-          factor =  0.45359;
-        }
-
         goods.push(
           {
             Status: 'Available',
@@ -280,11 +270,7 @@ var main = function() {
             Sids: [
               {
                 "Code": "UNITPRICE",
-                "Value": parseFloat(value[COL_UNITPRICE]) * factor
-              },
-              {
-                "Code": "UNITPRCUOM",
-                "Value": value[COL_PRICE_UOM]
+                "Value": parseFloat(value[COL_UNITPRICE])
               },
               {
                 "Code": "ORIGCC",
@@ -312,18 +298,7 @@ var main = function() {
           {Code: "PCKUPDATE", Value: convertISODateToBelgian(data.pickup)},
           {Code: "SHN", Value: data.shipno},
           {Code: "AGC", Value: data.agentcode},
-          {Code: "DSPCTRY", Value: data.dispatchcountry},
           {Code: "WHSE", Value: data.warehouse},
-        ],
-        PartnerAddresses: [
-         {
-           PartnerName: data.warehouse,
-           CompanyRoleCode: "SHIP_TO",
-           AddressLine: data.address.line,
-           Zip: data.address.zip,
-           City: data.address.city,
-           CountryCode: data.address.countrycode,
-         }
         ],
         DischargingOrderItems: [
           {  ExternalId: data.containerTables[container][0][COL_CONT] + "-" + data.extid + "-" + data.containerTables[container][0][COL_INVNO],
@@ -340,8 +315,7 @@ var main = function() {
                {Code: "IVAL", Value: data.containerTables[container][0][COL_INVAMNT]},
                {Code: "IVALCUR", Value: data.containerTables[container][0][COL_INVCURR]},
                {Code: "INCTRM", Value: data.containerTables[container][0][COL_INCO]},
-               {Code: "FRGHTCOST", Value: data.containerTables[container][0][COL_FREIGHT]},
-               {Code: "INSRCOST", Value: data.containerTables[container][0][COL_INSURANCE]},
+               {Code: "FOBANR", Value: data.containerTables[container][0][COL_FOB]},
                {Code: "CIFANR", Value: data.containerTables[container][0][COL_CIF]},
                {Code: "DRPOFFDEPOT", Value: data.containerTables[container][0][COL_DROPOFF]},
                {Code: "REM", Value: data.containerTables[container][0][COL_REM]},
@@ -487,7 +461,6 @@ var main = function() {
           pickup: d.pickup,
           shipno: d.shipno,
           agentcode: d.agentcode,
-          dispatchcountry: d.dispatchcountry,
           // articleno: d.articleno,
           // itemno: d.itemno,
           warehouse: d.warehouse,
@@ -536,7 +509,6 @@ var main = function() {
         pickup: {type: Sequelize.STRING},
         shipno: {type: Sequelize.STRING},
         agentcode: {type: Sequelize.STRING},
-        dispatchcountry: {type: Sequelize.STRING},
         // articleno: {type: Sequelize.STRING},
         // itemno: {type: Sequelize.STRING},
         warehouse: {type: Sequelize.STRING},

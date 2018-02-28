@@ -25,6 +25,7 @@ var SITES_PRD = [
   {name: 'Braskem', basepath: 'Braskem_Inbound', port: 8878},
   {name: 'FMS Inbound', basepath: 'FMS_Inbound', port: 8881},
   {name: 'FMS Outbound', basepath: 'FMS_Outbound', port: 8891},
+  {name: 'FMS Outbound Extended', basepath: 'FMS_ExtOutbound', port: 8901},
   {name: 'Carpenter', basepath: 'Carpenter_Inbound', port: 8868},
   {name: 'HHT Stock Inventory', basepath: 'HHT_Stock_Inventory', port: 8800},
   {name: 'HHT Challenge', basepath: 'HHT_Challenge', port: 8801},
