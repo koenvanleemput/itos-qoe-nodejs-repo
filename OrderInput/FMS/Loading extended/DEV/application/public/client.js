@@ -198,16 +198,7 @@ $(function() {
     }
 
     // get Transport References
-    let qoeTransports = {};
-    let transportlistdata = transportlist.getSourceData();
-    for (let i = 0; i < transportlistdata.length; i++) {
-      let tref = transportlistdata[i][COL_TL_REF];
-      let tnr = transportlistdata[i][COL_TL_QOE_NR];
-      if (tref !== undefined && tref !== null && tref !== '' &&
-          tnr !== undefined && tnr !== null && tnr !== '') {
-        qoeTransports[tnr] = tref;
-      }
-    };
+    let qoeTransports = getTransportDict(transportlist.getSourceData());
     console.log("Transports: " + JSON.stringify(qoeTransports));
 
     // clean empty rows from table
@@ -407,7 +398,21 @@ $(function() {
     });
   });
 
-  // Filter Unique 2D array
+
+  // Calculate Transport Summary
+  $('a#transportsummary').click(function(event) {
+    event.preventDefault();
+    transportsummary.loadData([]);
+
+    // get Transport References
+    let qoeTransports = getTransportDict(transportlist.getSourceData());
+    console.log("Transports: " + JSON.stringify(qoeTransports));
+
+    let packinglistdata = packinglist.getSourceData();
+  });
+
+
+  // Filter Unique 2D array packing list
   $('a#unique').click(function(event) {
     event.preventDefault();
 
@@ -415,6 +420,7 @@ $(function() {
     packinglist.loadData(filterUniquePackingList(packinglistdata));
   });
 
+  // sort packing list
   $('a#sort').click(function(event) {
     event.preventDefault();
 
@@ -524,6 +530,20 @@ var sumGrossWeights = function(data) {
   var grossweights = data.map(row => row[COL_GROSS]);
   var sum = grossweights.reduce((a,b) => parseFloatOrZero(a)+parseFloatOrZero(b), 0); // sum of weights
   return sum;
+}
+
+
+var getTransportDict = function(transportlistdata) {
+  let qoeTransports = {};
+  for (let i = 0; i < transportlistdata.length; i++) {
+    let tref = transportlistdata[i][COL_TL_REF];
+    let tnr = transportlistdata[i][COL_TL_QOE_NR];
+    if (tref !== undefined && tref !== null && tref !== '' &&
+        tnr !== undefined && tnr !== null && tnr !== '') {
+      qoeTransports[tnr] = tref;
+    }
+  };
+  return qoeTransports;
 }
 
 var sortPackingList = function(packinglist) {
